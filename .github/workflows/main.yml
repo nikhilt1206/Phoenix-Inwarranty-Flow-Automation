@@ -20,7 +20,7 @@ jobs:
       - name: Install Nodejs and npm
         uses: actions/setup-node@v6.5.0
         with:
-          node-version: '18'
+          node-version: '22'
 
       - name: Install Newman and Html-extra globally
         run: |
@@ -28,17 +28,16 @@ jobs:
           npm install -g newman-reporter-htmlextra
 
       - name: Run the Postman Collection with newman
+        continue-on-error: true
         run: |
           newman run 'Inwarranty-flow Collection.postman_collection.json' \
           -e QA.postman_environment.json \
           -d testData.csv \
-          -r cli,htmlextra || true
+          -r cli,htmlextra
 
-          echo "===== CURRENT DIRECTORY ====="
-          pwd
-
-          echo "===== FILES ====="
-          ls -la
-
-          echo "===== NEWMAN DIRECTORY ====="
-          ls -la newman || true
+      - name: Newman Report
+        if: always()
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: Newman Report
+          path: newman/*.html
