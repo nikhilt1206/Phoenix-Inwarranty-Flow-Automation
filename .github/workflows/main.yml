@@ -39,7 +39,7 @@ jobs:
         uses: actions/upload-artifact@v7.0.1
         with:
           name: Newman Report
-          path: newman/ *.html
+          path: newman/*.html
 
       # - name: Fail workflow if Newman tests failed
       #   if: ${{ steps.newman.outcome == 'failure' }}
