@@ -48,3 +48,10 @@ jobs:
         run: |
           echo "Newman tests failed. Please check the Newman HTML report."
           exit 1
+
+      - name: Creating github page branch
+        if: always()
+        uses: peaceiris/actions-gh-pages@v4.1.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: newman/
