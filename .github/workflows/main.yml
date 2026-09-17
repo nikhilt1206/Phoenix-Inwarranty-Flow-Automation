@@ -56,3 +56,26 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: newman/
+
+      - name: Send email Notification
+        if: always()
+        uses: dawidd6/action-send-mail@v22
+        with: 
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: Pheonix Inwarranty Flow Test Execution
+          to: nikhilt1206@gmail.com
+          from: ${{ secrets.EMAIL_USERNAME }}
+          body: | 
+                Hi,
+                Please find the attached HTML Report generated after running the Postman tests via
+                Github Actions.
+                URL: https://nikhilt1206.github.io/Phoenix-Inwarranty-Flow-Automation/
+
+                Regards,
+                Github Actions
+
+      
+     
